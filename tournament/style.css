@@ -1,0 +1,37 @@
+.match-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    border: 1px solid #c3c3c3;
+    border-radius: 4px;
+    background-color: #ffffff;
+    width: 200px;
+    padding: 0;
+    margin: 0;
+    overflow: clip;
+}
+
+.player-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+
+    p {
+        margin: 0;
+        padding: 4px 10px;
+    }
+
+    >p:first-child {
+        background-color: gray;
+        color: white;
+    }
+}
+
+hr {
+    width: 100%;
+    margin: 0;
+    border: 1px solid #c3c3c3;
+}
