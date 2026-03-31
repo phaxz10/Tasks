@@ -33,6 +33,7 @@ input {
 button {
     padding: 10px;
     border: 0;
+    cursor: pointer;
 }
 
 #error {
@@ -109,6 +110,12 @@ button {
 .player-name {
     flex: 1;
     color: #334155;
+    background-color: white;
+}
+
+.player-name.disabled {
+    color: #94a3b8;
+    cursor: not-allowed;
 }
 
 hr {

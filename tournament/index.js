@@ -48,12 +48,12 @@ const roundColumns = Array.from({ length: numOfRounds }, (_, round) => {
         matchContainer.innerHTML = `
             <div class="player-container" id="${match.id}-${match.slotNumbers[0]}">
                 <p class="slot-number">${match.slotNumbers[0]}</p>
-                <p class="player-name">${match.players?.[0] || "TBD"}</p>
+                <button disabled class="player-name disabled">${match.players?.[0] || "TBD"}</button>
             </div>
             <hr>
             <div class="player-container" id="${match.id}-${match.slotNumbers[1]}">
                 <p class="slot-number">${match.slotNumbers[1]}</p>
-                <p class="player-name">${match.players?.[1] || "TBD"}</p>
+                <button disabled class="player-name disabled">${match.players?.[1] || "TBD"}</button>
             </div>
         `;
 
@@ -110,6 +110,7 @@ const handleAssign = () => {
             playerNameElement.textContent = playerName;
         });
     });
+
 }
 
 assignButton.addEventListener("click", handleAssign)
