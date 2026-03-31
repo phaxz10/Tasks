@@ -1,4 +1,4 @@
-let players = new Set();
+
 const playersPerMatch = 2
 let numOfRounds = 3
 
@@ -66,3 +66,50 @@ const roundColumns = Array.from({ length: numOfRounds }, (_, round) => {
 });
 
 bracketContainer.append(...roundColumns);
+
+
+const assignButton = document.getElementById("assign");
+const errorDisplay = document.getElementById("error")
+const playerNamesInput = document.getElementById("player-names");
+
+playerNamesInput.addEventListener("change", () => {
+    errorDisplay.textContent = "";
+})
+
+const handleAssign = () => {
+    const inputNames = playerNamesInput.value.split(",").map((name) => name.trim()).filter(Boolean);
+
+    if (inputNames.length !== requiredPlayersCount) {
+        errorDisplay.textContent = `Please enter exactly ${requiredPlayersCount} player names.`;
+        return;
+    }
+
+    const players = new Set(inputNames);
+
+    if (players.size !== requiredPlayersCount) {
+        errorDisplay.textContent = "Player names must be unique.";
+        return;
+    }
+
+    // get only the first round matches
+    const firstRoundMatches = matches.filter((match) => match.round === 0);
+
+    firstRoundMatches.forEach((match) => {
+        match.slotNumbers.forEach((slotNumber) => {
+
+            const playerName = inputNames[slotNumber - 1];
+
+            match.players.push(playerName);
+
+            const playerContainer = document.getElementById(`${match.id}-${slotNumber}`);
+            if (!playerContainer) return;
+
+            const playerNameElement = playerContainer.querySelector(".player-name");
+            if (!playerNameElement) return;
+
+            playerNameElement.textContent = playerName;
+        });
+    });
+}
+
+assignButton.addEventListener("click", handleAssign)
