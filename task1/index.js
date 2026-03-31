@@ -1,3 +1,5 @@
+let hideDischarged = false
+
 const patients = [
     { id: "P101", name: "Santos, Maria", status: "Active", balance: 1500.00, ward: "A" },
     { id: "P102", name: "Reyes, Jose", status: "Discharged", balance: 0.00, ward: "B" },
@@ -14,24 +16,46 @@ const PHPFormatter = new Intl.NumberFormat('en-PH', {
 })
 
 const sortedPatients = patients.toSorted((a, b) => {
-    const statusA = a.status.toUpperCase();
-    const statusB = b.status.toUpperCase();
+    const statusA = a.status;
+    const statusB = b.status;
 
     // show active patients first
     if (statusA !== statusB) {
-        return statusA === "ACTIVE" ? -1 : 1;
+        return statusA === "Active" ? -1 : 1;
     }
 
     // then sort by ward
     return a.ward.localeCompare(b.ward);
 });
 
+// since we sorted patients with active first, we can slice out the discharged patients
+let firstDischargedIndex = -1
+
+for (let i = 0; i < sortedPatients.length; i++) {
+    if (sortedPatients[i].status === "Discharged") {
+        firstDischargedIndex = i;
+        break;
+    }
+}
+
+const noDischargedPatients = firstDischargedIndex !== -1 ? sortedPatients.slice(0, firstDischargedIndex) : sortedPatients;
+
 const app = document.getElementById("app");
 
+if (!app) {
+    throw new Error("App container not found");
+}
+
+const button = document.createElement("button");
+const listContainer = document.createElement("div");
+listContainer.classList.add("container")
+
+app.append(button, listContainer);
+
+
 const renderPatients = (patientList) => {
-    if (!app) {
-        throw new Error("App container not found");
-    };
+    button.textContent = hideDischarged ? "Show All" : "Hide Discharged";
+    const fragment = document.createDocumentFragment();
 
     patientList.forEach((patient) => {
 
@@ -57,9 +81,21 @@ const renderPatients = (patientList) => {
         `;
 
 
-        app.appendChild(card);
+        fragment.appendChild(card);
     });
+
+    listContainer.replaceChildren(fragment);
 }
 
 
 renderPatients(sortedPatients);
+
+button.addEventListener("click", () => {
+    if (hideDischarged) {
+        hideDischarged = false;
+        renderPatients(sortedPatients);
+    } else {
+        hideDischarged = true;
+        renderPatients(noDischargedPatients)
+    }
+})
