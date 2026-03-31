@@ -113,6 +113,10 @@ button {
     background-color: white;
 }
 
+.player-name.active {
+    background-color: aquamarine;
+}
+
 .player-name.disabled {
     color: #94a3b8;
     cursor: not-allowed;

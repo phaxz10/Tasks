@@ -67,6 +67,7 @@ const roundColumns = Array.from({ length: numOfRounds }, (_, round) => {
 
 bracketContainer.append(...roundColumns);
 
+const getMatchById = (id) => matches.find((match) => match.id === id)
 
 const assignButton = document.getElementById("assign");
 const errorDisplay = document.getElementById("error")
@@ -108,9 +109,52 @@ const handleAssign = () => {
             if (!playerNameElement) return;
 
             playerNameElement.textContent = playerName;
+            playerNameElement.disabled = false;
+            playerNameElement.classList.remove("disabled");
+            playerNameElement.setAttribute("data-player", playerName);
+            playerNameElement.setAttribute("data-slot", slotNumber);
+            playerNameElement.setAttribute("data-next", match.nextMatch);
         });
     });
 
 }
 
 assignButton.addEventListener("click", handleAssign)
+
+const updatePlayerButton = (playerName, nextMatchId, slotNumber) => {
+    const buttonToUpdate = document.getElementById(`${nextMatchId}-${slotNumber}`).querySelector(".player-name")
+    if (!buttonToUpdate) return;
+
+    buttonToUpdate.textContent = playerName;
+    buttonToUpdate.disabled = false;
+    buttonToUpdate.classList.remove("disabled");
+    buttonToUpdate.setAttribute("data-player", playerName);
+    buttonToUpdate.setAttribute("data-slot", slotNumber);
+    buttonToUpdate.setAttribute("data-next", getMatchById(nextMatchId)?.nextMatch || "");
+}
+
+bracketContainer.addEventListener("click", (event) => {
+    const playerButton = event.target.closest(".player-name");
+    if (!playerButton) return;
+
+    const matchContainer = playerButton.closest(".match-container");
+    if (!matchContainer) return;
+
+    matchContainer.querySelectorAll(".player-name").forEach((button) => {
+        button.classList.toggle("active", button === playerButton);
+    });
+
+    const playerName = playerButton.getAttribute("data-player");
+    const nextMatchId = playerButton.getAttribute("data-next");
+    const slotNumber = parseInt(playerButton.getAttribute("data-slot"), 10);
+
+    const nextMatch = getMatchById(nextMatchId);
+    if (!nextMatch) return;
+
+    const currentPlayerBelongsToSlot = Math.ceil(slotNumber / playersPerMatch)
+
+    if (!nextMatch.players.includes(playerName)) {
+        nextMatch.players[currentPlayerBelongsToSlot - 1] = playerName;
+        updatePlayerButton(playerName, nextMatchId, currentPlayerBelongsToSlot);
+    }
+})
