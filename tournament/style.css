@@ -122,6 +122,10 @@ button {
     cursor: not-allowed;
 }
 
+.player-name.hover {
+    background-color: yellow;
+}
+
 hr {
     width: 100%;
     margin: 0;

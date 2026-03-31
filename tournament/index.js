@@ -158,3 +158,23 @@ bracketContainer.addEventListener("click", (event) => {
         updatePlayerButton(playerName, nextMatchId, currentPlayerBelongsToSlot);
     }
 })
+
+bracketContainer.addEventListener("mouseover", (event) => {
+    const playerButton = event.target.closest(".player-name[data-player]");
+    if (!playerButton) return;
+
+    const playerName = playerButton.getAttribute("data-player");
+    document.querySelectorAll(`.player-name[data-player="${playerName}"]`).forEach((button) => {
+        button.classList.add("hover")
+    })
+})
+
+bracketContainer.addEventListener("mouseout", (event) => {
+    const playerButton = event.target.closest(".player-name[data-player]");
+    if (!playerButton) return;
+
+    const playerName = playerButton.getAttribute("data-player");
+    document.querySelectorAll(`.player-name[data-player="${playerName}"]`).forEach((button) => {
+        button.classList.remove("hover")
+    })
+})
