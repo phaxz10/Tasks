@@ -1,0 +1,32 @@
+body {
+    padding: 20px;
+    background-color: white;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.patient-card {
+    padding: 15px;
+    border-radius: 9px;
+    background-color: white
+}
+
+.patient-card p {
+    margin: 4px 0;
+}
+
+.discharged {
+    background-color: #E0E0E0;
+}
+
+.active-with-balance {
+    border: 2px solid red;
+}
