@@ -9,13 +9,18 @@
 </head>
 
 <body>
-    <h1>Tournament Bracket</h1>
-    <input type="text" placeholder="players input" />
-    <span>Use comma to separate players</span>
-    <p id="error"></p>
-    <button id="assign">Assign Players</button>
+    <section class="header">
+        <h1>Tournament Bracket</h1>
+        <div class="input">
+            <input type="text" placeholder="players input" />
+            <button id="assign">Assign Players</button>
+        </div>
+        <span>Use comma to separate players</span>
+        <p id="error"></p>
+    </section>
 
-    <div id="bracket"></div>
+    <div id="bracket" class="bracket-board"></div>
+
     <script src="./index.js"></script>
 </body>
 

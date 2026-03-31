@@ -1,37 +1,130 @@
-.match-container {
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    padding: 20px;
+    max-width: 1280px;
+    margin-inline: auto;
+}
+
+.header {
+    margin-bottom: 28px;
+}
+
+h1 {
+    margin: 0 0 16px;
+}
+
+.input {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+input {
+    flex: 1;
+    min-width: 240px;
+    padding: 10px 12px;
+}
+
+button {
+    padding: 10px;
+    border: 0;
+}
+
+#error {
+    min-height: 20px;
+    margin: 8px 0 0;
+    color: #b91c1c;
+}
+
+.bracket-board {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    gap: 28px;
+    align-items: start;
+    overflow-x: auto;
+}
+
+.round-column {
     display: flex;
     flex-direction: column;
-    align-items: start;
-    border: 1px solid #c3c3c3;
-    border-radius: 4px;
-    background-color: #ffffff;
-    width: 200px;
+    gap: 16px;
+}
+
+.round-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.round-matches {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 400px;
+    justify-content: space-evenly;
+}
+
+.match-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    border: 1px solid #d2d2d2;
+    border-radius: 10px;
+    background-color: white;
+    width: 100%;
+    min-height: 82px;
     padding: 0;
     margin: 0;
-    overflow: clip;
+    overflow: hidden;
 }
 
 .player-container {
     display: flex;
-    flex-direction: row;
     align-items: center;
     width: 100%;
-    padding: 0;
+    min-height: 40px;
+    background-color: white;
+}
+
+.player-container p {
     margin: 0;
+    padding: 10px;
+}
 
-    p {
-        margin: 0;
-        padding: 4px 10px;
-    }
+.slot-number {
+    min-width: 42px;
+    background-color: gray;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
 
-    >p:first-child {
-        background-color: gray;
-        color: white;
-    }
+.player-name {
+    flex: 1;
+    color: #334155;
 }
 
 hr {
     width: 100%;
     margin: 0;
-    border: 1px solid #c3c3c3;
+    border: 0;
+    border-top: 1px solid #e2e8f0;
+}
+
+@media (max-width: 900px) {
+    .bracket-board {
+        grid-template-columns: 1fr;
+    }
+
+    .round-matches {
+        height: auto;
+        gap: 20px;
+    }
 }

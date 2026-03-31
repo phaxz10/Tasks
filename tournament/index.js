@@ -28,21 +28,41 @@ for (let round = 0; round < numOfRounds; round++) {
 
 
 // create DOM elements for matches
-const matchesElements = matches.map(match => {
-    const matchContainer = document.createElement("div")
-    matchContainer.id = match.id;
-    matchContainer.classList.add("match-container")
-    matchContainer.innerHTML = `
-    <div class="player-container" id="${match.id}-${match.slotNumbers[0]}">
-    <p>${match.slotNumbers[0]}</p>
-    <p>${match.players?.[0] || ''}</p></div>
-    <hr></hr>
-    <div class="player-container" id="${match.id}-${match.slotNumbers[1]}">
-    <p>${match.slotNumbers[1]}</p>
-    <p>${match.players?.[1] || ''}</p></div>
-    `
+const roundColumns = Array.from({ length: numOfRounds }, (_, round) => {
+    const roundColumn = document.createElement("section");
+    roundColumn.classList.add("round-column");
 
-    return matchContainer
-})
+    const roundTitle = document.createElement("h2");
+    roundTitle.classList.add("round-title");
+    roundTitle.textContent = `Round ${round + 1}`;
 
-bracketContainer.append(...matchesElements);
+    const matchesGroup = document.createElement("div");
+    matchesGroup.classList.add("round-matches", `round-${round + 1}`);
+
+    const roundMatches = matches.filter((match) => match.round === round);
+
+    const matchElements = roundMatches.map((match) => {
+        const matchContainer = document.createElement("div");
+        matchContainer.id = match.id;
+        matchContainer.classList.add("match-container");
+        matchContainer.innerHTML = `
+            <div class="player-container" id="${match.id}-${match.slotNumbers[0]}">
+                <p class="slot-number">${match.slotNumbers[0]}</p>
+                <p class="player-name">${match.players?.[0] || "TBD"}</p>
+            </div>
+            <hr>
+            <div class="player-container" id="${match.id}-${match.slotNumbers[1]}">
+                <p class="slot-number">${match.slotNumbers[1]}</p>
+                <p class="player-name">${match.players?.[1] || "TBD"}</p>
+            </div>
+        `;
+
+        return matchContainer;
+    });
+
+    matchesGroup.append(...matchElements);
+    roundColumn.append(roundTitle, matchesGroup);
+    return roundColumn;
+});
+
+bracketContainer.append(...roundColumns);
